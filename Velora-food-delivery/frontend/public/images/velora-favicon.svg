@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <mask id="mark">
+      <rect width="64" height="64" fill="#fff" />
+      <path d="M41.5 21v5m3-5v5m3-5v5m-7.5 1v3c0 2 1.2 3.3 3 3.3V37" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="21" cy="46" r="1.7" fill="#000" />
+      <circle cx="43" cy="46" r="1.7" fill="#000" />
+    </mask>
+  </defs>
+  <circle cx="32" cy="32" r="30.5" fill="none" stroke="#D92129" stroke-width="2" />
+  <g mask="url(#mark)" fill="#D92129">
+    <path d="M9 41h35c5 0 8-3 8-8V17" fill="none" stroke="#D92129" stroke-width="4" stroke-linecap="round" />
+    <rect x="14" y="29" width="9" height="12" rx="2.5" />
+    <rect x="26" y="23" width="10" height="18" rx="3" />
+    <rect x="39" y="15" width="11" height="26" rx="3.5" />
+    <circle cx="21" cy="46" r="4" />
+    <circle cx="43" cy="46" r="4" />
+  </g>
+</svg>

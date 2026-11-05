@@ -1,0 +1,74 @@
+services:
+  # Database Service
+  db:
+    image: postgres:16-alpine
+    container_name: velora_db
+    restart: always
+    environment:
+      POSTGRES_DB: velora_db
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Preserve databases created by older versions of this Compose project.
+  db-migrate:
+    image: postgres:16-alpine
+    environment:
+      PGPASSWORD: ${DB_PASSWORD:-postgres}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        set -eu;
+        if psql -h db -U "$$DB_USERNAME" -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'velora_db'" | grep -q 1; then
+          echo 'velora_db already exists';
+        elif psql -h db -U "$$DB_USERNAME" -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname = 'food_delivery_db'" | grep -q 1; then
+          psql -v ON_ERROR_STOP=1 -h db -U "$$DB_USERNAME" -d postgres -c 'ALTER DATABASE food_delivery_db RENAME TO velora_db';
+        else
+          psql -v ON_ERROR_STOP=1 -h db -U "$$DB_USERNAME" -d postgres -c 'CREATE DATABASE velora_db';
+        fi
+
+  # Spring Boot Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: velora_backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/velora_db
+      - DB_USERNAME=${DB_USERNAME:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - JWT_SECRET=${JWT_SECRET:-your_super_secret_jwt_key_here}
+      - JWT_EXPIRATION_MS=${JWT_EXPIRATION_MS:-86400000}
+    depends_on:
+      db-migrate:
+        condition: service_completed_successfully
+
+  # React Frontend Service served by Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: velora_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

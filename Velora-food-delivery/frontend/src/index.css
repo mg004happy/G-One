@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   VELORA — DESIGN SYSTEM
+   Premium Food Delivery UI (Startup/SaaS Aesthetic)
+   ============================================================ */
+
+/* ---------- CSS Custom Properties (Design Tokens) ---------- */
+:root {
+  /* Brand Colors */
+  --color-primary: #D92129;
+  --color-primary-dark: #AD171F;
+  --color-primary-light: #FCE8E9;
+  --color-secondary: #B81F26;
+  --color-secondary-light: #F8EDEE;
+
+  /* Neutrals */
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F8F8F8;
+  --color-bg-tertiary: #F1F2F3;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #171717;
+  --color-text-secondary: #555555;
+  --color-text-tertiary: #777777;
+  --color-border: #E2E2E2;
+  --color-border-light: #EEEEEE;
+
+  /* Semantic */
+  --color-success: #10B981;
+  --color-success-light: #D1FAE5;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-error: #D83B50;
+  --color-error-light: #FCE4E8;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+  --font-family-display: 'Inter', Arial, sans-serif;
+  --font-family-sans: 'Inter', Arial, sans-serif;
+
+  /* Premium SaaS shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 24px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 24px 48px -10px rgba(0, 0, 0, 0.12), 0 8px 16px -6px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 20px rgba(217, 33, 41, 0.16);
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shared layout */
+  --navbar-height: 72px;
+}
+
+/* ---------- Dark Mode Tokens ---------- */
+[data-theme="dark"] {
+  --color-bg: #111111;
+  --color-bg-secondary: #171717;
+  --color-bg-tertiary: #242424;
+  --color-surface: #1C1C1C;
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #C2C2C2;
+  --color-text-tertiary: #969696;
+  --color-border: #363636;
+  --color-border-light: #2B2B2B;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.6), 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 24px 48px -8px rgba(0, 0, 0, 0.7), 0 8px 16px -4px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(217, 33, 41, 0.22);
+}
+
+/* ---------- TailwindCSS v4 Theme Extension ---------- */
+@theme {
+  --color-primary: #D92129;
+  --color-primary-dark: #AD171F;
+  --color-primary-light: #FCE8E9;
+  --color-secondary: #B81F26;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+  --color-surface: var(--color-surface);
+  --font-family-sans: 'Inter', Arial, sans-serif;
+  --font-family-display: 'Inter', Arial, sans-serif;
+}
+
+/* ---------- Base Reset & Typography ---------- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--navbar-height) + 1rem);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    overflow-x: clip;
+    transition: background-color var(--transition-base), color var(--transition-base);
+  }
+
+  main {
+    min-width: 0;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-family-display);
+    letter-spacing: -0.025em;
+  }
+
+  /* ---------- Link Reset ---------- */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ---------- Image Reset ---------- */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* ---------- Scrollbar Styling ---------- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-tertiary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* ---------- Focus Styles ---------- */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@layer components {
+  /* ---------- Utility Classes ---------- */
+
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  }
+
+  .bg-gradient-hero {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 58%, #F3F3F3 100%);
+  }
+
+  [data-theme="dark"] .bg-gradient-hero {
+    background: linear-gradient(135deg, #111111 0%, #191919 58%, #222222 100%);
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  [data-theme="dark"] .glass {
+    background: color-mix(in srgb, var(--color-surface) 84%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  /* Stagger children animation */
+  .stagger-children > * {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+
+  .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+  .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+  .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+  /* Skeleton loading */
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-bg-tertiary) 25%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+  }
+
+  /* Veg / Non-veg indicator */
+  .veg-indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #10B981;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .veg-indicator::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10B981;
+  }
+
+  .nonveg-indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #EF4444;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nonveg-indicator::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #EF4444;
+  }
+
+}
+
+/* Smooth fade-in animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---------- Toast Overrides ---------- */
+.toast-custom {
+  font-family: 'Inter', Arial, sans-serif !important;
+  border-radius: var(--radius-lg) !important;
+}

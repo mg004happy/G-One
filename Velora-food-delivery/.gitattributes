@@ -1,0 +1,44 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Java sources
+*.java text diff=java
+*.kt text diff=kotlin
+*.groovy text diff=java
+
+# Properties and configs
+*.properties text
+*.yml text
+*.yaml text
+*.xml text
+
+# Scripts
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Maven Wrapper
+mvnw text eol=lf
+mvnw.cmd text eol=crlf
+
+# Frontend
+*.js text
+*.jsx text
+*.ts text
+*.tsx text
+*.css text
+*.html text
+*.json text
+*.md text
+
+# Binary files (don't touch)
+*.jar binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

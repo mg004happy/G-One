@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run FoodDeliveryApplication",
+            "request": "launch",
+            "mainClass": "com.fooddelivery.FoodDeliveryApplication",
+            "projectName": "food-delivery",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
